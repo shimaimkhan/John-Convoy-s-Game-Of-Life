@@ -1,0 +1,70 @@
+
+package filing;
+
+/**
+ *
+ * @author Shimaim Khan
+ */
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+/**
+ *
+ * @author Shimaim Khan
+ */
+public class mainclass {
+
+    private static final int rows=10;
+    private static final int col=10;
+    
+    public static void main(String[] args) throws FileNotFoundException 
+    {
+        readFile();   
+        
+               
+    }
+
+    private static void readFile() throws FileNotFoundException 
+    {
+    
+        int[][] newarray =new int [rows][col];
+    
+        Scanner s= new Scanner(checkfilename());
+        while(s.hasNextLine())
+        {
+           
+            for(int i=0;i<rows;i++)
+            {
+                 String[] line= s.nextLine().trim().split(",");
+                for(int j=0;j<col;j++)
+                {
+                    newarray[i][j]= Integer.parseInt(line[j]);
+                }
+            }
+        }
+    System.out.println(Arrays.deepToString(newarray));
+    }
+
+    private static File checkfilename() 
+    {
+       
+        FileDialog d= new FileDialog ((Frame)null,"Select file to open");
+        d.setMode(FileDialog.LOAD);
+        d.setVisible(true);
+        File[] file= d.getFiles();
+        return file[0];
+        
+    }
+    
+    
+    
+
+   
+}
+
