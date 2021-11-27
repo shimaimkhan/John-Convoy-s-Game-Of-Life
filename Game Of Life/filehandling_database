@@ -1,0 +1,54 @@
+
+package filing;
+
+/**
+ *
+ * @author Shimaim Khan
+ */
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+/**
+ *
+ * @author Shimaim Khan
+ */
+public class mainclass {
+
+    private static final int rows=10;
+    private static final int col=10;
+    
+    public static void main(String[] args) throws FileNotFoundException 
+    {
+        readFile();   
+        
+               
+    }
+
+    private static void readFile() throws FileNotFoundException 
+    {
+    
+        int[][] newarray =new int [rows][col];
+         File filename= new File("D:\\file.txt");
+        Scanner s= new Scanner(filename);
+        while(s.hasNextLine())
+        {
+           
+            for(int i=0;i<rows;i++)
+            {
+                 String[] line= s.nextLine().trim().split(",");
+                for(int j=0;j<col;j++)
+                {
+                    newarray[i][j]= Integer.parseInt(line[j]);
+                }
+            }
+        }
+    System.out.println(Arrays.deepToString(newarray));
+    }
+
+   
+}
+
