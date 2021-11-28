@@ -12,8 +12,10 @@ import State.State;
 public interface DBInterface {
     
     public State loadState();
-    public void saveState(State state);
-    public void deleteState();
+    public void save_in_File(State state);
+    public void delete_recent_state(state_name);
+    public void view_states();
+    
     
     
 }
