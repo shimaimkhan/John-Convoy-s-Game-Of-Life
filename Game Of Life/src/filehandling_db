@@ -1,0 +1,170 @@
+
+package filing;
+
+/**
+ *
+ * @author Shimaim Khan
+ */
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+/**
+ *
+ * @author Shimaim Khan
+ */
+public class mainclass 
+{
+
+    private static final int rows=10;
+    private static final int col=10;
+   
+    public static void main(String[] args) throws FileNotFoundException, IOException 
+    {
+         int[][] store={{1,1,0,0,0,1,0,1,1,0},
+         {1,1,0,1,1,0,0,0,1,1},
+         {1,0,0,0,0,0,0,0,0,1},
+         {0,0,0,0,1,1,1,0,1,0},
+         {1,0,0,1,0,1,0,1,1,0},
+         {1,1,1,1,0,0,1,0,1,0},
+         {0,0,1,1,1,0,0,1,0,1},
+         {1,1,1,0,0,0,0,0,0,0},
+         {1,1,0,0,0,0,0,1,1,1},
+         {0,0,1,1,1,0,1,0,1,0}};
+         String name="store";
+         
+         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter the number:\n 1 for loading state\n 2 to save state\n 3 to delete state\n 4 to view state\n ");
+
+        int number = myObj.nextInt(); 
+        
+        if(number==1)//loading state
+        {
+            loadState();
+        }
+        else if(number==2)//storing state
+        {
+            save_in_File(store,name);   
+        }
+        else if(number==3)//delete recent state
+        {
+            delete_recent_state(name);
+        }
+        else//viewing states
+        {
+            view_states();
+        }
+        
+    }
+
+    private static int[][] loadState() throws FileNotFoundException 
+    {
+    
+        int[][] newarray =new int [rows][col];
+    
+        Scanner s= new Scanner(checkfilename());
+        while(s.hasNextLine())
+        {
+           
+            for(int i=0;i<rows;i++)
+            {
+                 String[] line= s.nextLine().trim().split(",");
+                for(int j=0;j<col;j++)
+                {
+                    newarray[i][j]= Integer.parseInt(line[j]);
+                }
+            }
+        }
+    System.out.println(Arrays.deepToString(newarray));
+    
+    return newarray;
+    }
+
+
+    private static void save_in_File(int[][] s, String n) throws IOException 
+    {
+        String c= n+".txt";
+       File filename= new File(c);
+       if(filename.createNewFile())
+       {
+           System.out.println("FILE created");
+       }
+       else
+       {
+           System.out.println("FILE exists");
+       }
+            
+         FileWriter f=new FileWriter(filename);   
+         PrintWriter p= new PrintWriter(f);
+         for(int i=0;i<rows;i++)
+         {
+             for(int j=0;j<col;j++)
+             {
+                  p.print(s[i][j]);
+                  if(j<9)
+                  { p.print(',');}
+             }
+             p.print('\n');
+            
+         }
+         p.close();
+            
+    }
+
+    private static void delete_recent_state(String n) throws IOException
+    {
+        System.out.println("Deleted!");
+         FileWriter f=new FileWriter((n+".txt"));   
+         PrintWriter p= new PrintWriter(f);
+        for(int i=0;i<rows;i++)
+            for(int j=0;j<col;j++)
+            {
+                p.print(' ');
+            }
+    }
+
+    private static void view_states() throws FileNotFoundException 
+    {
+        System.out.println("Select the name of state you want to view: ");
+            int[][] newarray =new int [rows][col];
+    
+          Scanner s= new Scanner(checkfilename());
+        while(s.hasNextLine())
+        {
+             
+            for(int i=0;i<rows;i++)
+            {
+                 String[] line= s.nextLine().trim().split(",");
+                for(int j=0;j<col;j++)
+                {
+                    newarray[i][j]= Integer.parseInt(line[j]);
+                }
+            }
+        }
+    System.out.println(Arrays.deepToString(newarray));
+        
+    }
+    
+    
+    private static File checkfilename() 
+    {
+       
+        FileDialog d= new FileDialog ((Frame)null,"Select file to open");
+        d.setMode(FileDialog.LOAD);
+        d.setVisible(true);
+        File[] file= d.getFiles();
+        return file[0];
+        
+    }
+    
+
+   
+}
+
